@@ -31,7 +31,7 @@ export const ViewItem = (itemProps: itemInterface) => {
         <section>
           <img
             alt={name}
-            src={`https://image.tmdb.org/t/p/original/${poster_path}`}
+            src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
           />
         </section>
 
