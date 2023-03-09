@@ -5,5 +5,6 @@ export interface itemInterface {
   backdrop_path?: string;
   vote_average: string;
   poster_path: string;
+  id: number;
   handleModal?: () => void;
 }

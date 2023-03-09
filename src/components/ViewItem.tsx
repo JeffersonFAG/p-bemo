@@ -3,36 +3,43 @@ import { itemInterface } from "../interfaces/itemInterface";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import "../styles/styles.css";
+import Recomendations from "./Recomendations";
+import { Loading } from "./Loading";
 
 export const ViewItem = (itemProps: itemInterface) => {
-  const { name, title, poster_path, vote_average, overview } = itemProps;
+  const { name, title, poster_path, vote_average, overview, id } = itemProps;
+
+  const [open, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 500,
+    width: 800,
     height: 510,
     bgcolor: "background.paper",
     border: "none",
+    borderRadius: "3%",
     boxShadow: 24,
-    p: 4,
-    color: "paper",
+    p: 2,
   };
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   return (
     <div className="content">
-      <button className="btn-items" onClick={handleOpen}>
+      <button className="btn-items" onClick={handleOpenModal}>
         <section>
-          <img
-            alt={name}
-            src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-          />
+          {poster_path ? (
+            <img
+              alt={name}
+              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+            />
+          ) : (
+            <Loading />
+          )}
         </section>
 
         <h3 className="txt">{name ?? title}</h3>
@@ -40,7 +47,7 @@ export const ViewItem = (itemProps: itemInterface) => {
       </button>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -53,9 +60,10 @@ export const ViewItem = (itemProps: itemInterface) => {
               <img
                 alt={name ?? title ?? "Loading..."}
                 src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
+                style={{ borderRadius: "3%" }}
               />
             </div>
-            <div style={{ overflow: "scroll-y" }}>
+            <div style={{ overflow: "hidden" }}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 Description
               </Typography>
@@ -69,6 +77,7 @@ export const ViewItem = (itemProps: itemInterface) => {
               >
                 Puntaje:
                 {vote_average ? vote_average : "Loading..."}
+                <Recomendations id={id} />
               </Typography>
             </div>
           </div>
